@@ -1,4 +1,13 @@
 # Setup
+## Installations
+### MongoDB Database
+Follow Tutorial under: https://www.mongodb.com/basics/mongodb-atlas-tutorial
+The Names of the databases and users are hardcoded right now. To use your own database name/username/password you would need to make adjustments in the code base under: Rat-Detector/RasPiCLuster/server/routes/api/detections.js. If you just want to run the code, here is what I used:
+- Database name: cluster0
+- username: freddykly
+- password: RatDetector
+
+### Npm installations 
 1. Change directory
 ```
 cd RasPiCluster
