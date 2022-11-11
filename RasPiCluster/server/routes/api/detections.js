@@ -3,6 +3,13 @@ const mongodb = require('mongodb');
 
 const router = express.Router();
 
+// Returns the DB "RatDetection" Collection
+async function loadRatDetectionCollection() {
+    const client = await mongodb.MongoClient.connect('mongodb+srv://freddykly:RatDetector@cluster0.4wp40qf.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true});
+
+    return client.db('cluster0').collection('ratDetections');
+}
+
 // Get
 // get the list of all RatDetections
 router.get('/', async (req, res) => {
@@ -10,18 +17,15 @@ router.get('/', async (req, res) => {
     res.send(await ratDetections.find({}).toArray());
 })
 
-async function loadRatDetectionCollection() {
-    const client = await mongodb.MongoClient.connect('mongodb+srv://freddykly:RatDetector@cluster0.4wp40qf.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true});
-
-    return client.db('cluster0').collection('ratDetections');
-}
-
 // Post
 // Save a RatDetection to the database
 router.post('/', async (req, res) =>{
+
     const ratDetections = await loadRatDetectionCollection();
     await ratDetections.insertOne({
-        text: req.body.text,
+        image: req.body.image,
+        confidence: req.body.confidence,
+        numberOfRats: req.body.numberOfRats,
         createdAt: new Date()
     });
     res.status(201).send()
