@@ -23,12 +23,14 @@ def sendImageMetaData(encodedImageData, confidence, numberOfRats):
 
     if(response.status_code == 201):
         print('Success')
+    else:
+        print(response)
 
 """
 Provides the Image as encoded base64
 """
 def provideEncodedImage():
-    with open('SensorNode/oikawa.jpg', mode='rb') as file:
+    with open('SensorNode/nishinoya.jpg', mode='rb') as file:
         img = file.read()
     return base64.encodebytes(img).decode('utf-8')
 
