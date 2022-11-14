@@ -12,20 +12,13 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col v-for="(detection, index) in detections" 
-          v-bind:item="detection" 
-          v-bind:index="index"
-            v-bind:key="detection._id" 
-            cols="2">
+          <v-col v-for="(detection, index) in detections" v-bind:item="detection" v-bind:index="index"
+            v-bind:key="detection._id" cols="2">
             <v-hover>
-              <template 
-              v-slot:default="{ isHovering, props }">
-                <v-card 
-                height="250" 
-                width="250" 
-                :elevation="isHovering ? 15 : 1" 
-                v-bind="props">
-                  <v-img :src="`data:image/jpg;base64,${detection.image}`" class="align-end" v-bind="props">
+              <template v-slot:default="{ isHovering, props }">
+                <v-card height="250" width="250" :elevation="isHovering ? 15 : 1" v-bind="props">
+                  <v-img :src="`data:image/jpg;base64,${detection.image}`" class="align-end" v-bind="props" 
+                  :gradient="isHovering ? 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,.45)' : 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.3), rgba(0,0,0,.5)'">
                     <v-card-title class="text-white"> {{ detection.createdAt }} </v-card-title>
                   </v-img>
                   <!-- <v-card-text>
@@ -38,12 +31,6 @@
           </v-col>
         </v-row>
       </v-container>
-      <v-hover>
-          <template v-slot:default="{ isHovering, props }">
-            <v-card v-bind="props" :color="isHovering ? 'primary' : undefined" title="Hover over me" text="...">
-            </v-card>
-          </template>
-        </v-hover>
     </v-main>
   </v-app>
 </template>
