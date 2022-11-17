@@ -10,7 +10,7 @@ The Names of the databases and users are hardcoded right now. To use your own da
 ### Npm installations 
 1. Change directory
 ```
-cd RasPiCluster
+cd RasPiCluster/WebApp
 ```
 
 2. Install dependencies for server
