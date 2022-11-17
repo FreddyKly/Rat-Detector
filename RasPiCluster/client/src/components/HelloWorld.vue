@@ -10,15 +10,16 @@
 
     <!-- Grid with Pictures -->
     <v-main>
-      <v-container>
+      <v-container fluid>
         <v-row>
           <v-col v-for="(detection, index) in detections" v-bind:item="detection" v-bind:index="index"
             v-bind:key="detection._id" cols="2">
             <v-hover>
               <template v-slot:default="{ isHovering, props }">
                 <v-card height="250" width="250" :elevation="isHovering ? 15 : 1" v-bind="props">
-                  <v-img :src="`data:image/jpg;base64,${detection.image}`" class="align-end" v-bind="props" 
-                  :gradient="isHovering ? 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,.45)' : 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.3), rgba(0,0,0,.5)'">
+                  <v-img :src="`data:image/jpg;base64,${detection.image}`" class="align-end" v-bind="props"
+                    :gradient="isHovering ? 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,.45)' : 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.3), rgba(0,0,0,.5)'"
+                    @click="detection.showDetails = !detection.showDetails">
                     <v-card-title class="text-white"> {{ detection.createdAt }} </v-card-title>
                   </v-img>
                   <!-- <v-card-text>
@@ -28,6 +29,9 @@
                 </v-card>
               </template>
             </v-hover>
+            <v-card-actions v-if="detection.showDetails">
+              {{ detection.confidence }}
+            </v-card-actions>
           </v-col>
         </v-row>
       </v-container>

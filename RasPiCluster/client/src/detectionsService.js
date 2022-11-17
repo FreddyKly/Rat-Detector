@@ -12,7 +12,8 @@ class detectionsService {
                 resolve(
                     data.map(detection => ({
                         ...detection,
-                        createdAt: new Date(detection.createdAt)
+                        createdAt: new Date(detection.createdAt),
+                        showDetails: false
                     })
                 ));
             } catch(err) {
