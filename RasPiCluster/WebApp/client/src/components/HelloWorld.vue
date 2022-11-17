@@ -12,7 +12,7 @@
     <v-main>
       <v-container fluid>
         <v-row>
-          <v-col v-for="(detection, index) in detections" v-bind:item="detection" v-bind:index="index"
+          <v-col v-for="(detection, index) in detections.slice().reverse()" v-bind:item="detection" v-bind:index="index"
             v-bind:key="detection._id" cols="2">
             <v-hover>
               <template v-slot:default="{ isHovering, props }">
