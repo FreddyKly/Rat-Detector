@@ -22,16 +22,20 @@
                     @click="detection.showDetails = !detection.showDetails">
                     <v-card-title class="text-white"> {{ detection.createdAt }} </v-card-title>
                   </v-img>
-                  <!-- <v-card-text>
-                {{ `${detection.createdAt.toUTCString()}` }}
-                <p class="text">{{ detection.text }}</p>
-              </v-card-text> -->
                 </v-card>
               </template>
             </v-hover>
-            <v-card-actions v-if="detection.showDetails">
-              {{ detection.confidence }}
-            </v-card-actions>
+            <v-expand-transition>
+              <v-card v-show="detection.showDetails" elevation="10" width="250" transition="scroll-y-transition">
+                <v-divider></v-divider>
+
+                <v-card-text>
+                  Confidence: {{detection.confidence}}
+                  <br>
+                  Number of Rats: {{detection.numberOfRats}}
+                </v-card-text>
+              </v-card>
+            </v-expand-transition>
           </v-col>
         </v-row>
       </v-container>
