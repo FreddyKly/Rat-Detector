@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <!-- App-Bar on top -->
-    <v-app-bar color="teal-darken-4">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-app-bar color="teal-darken-4" elevate-on-scroll>
+      <v-app-bar-nav-icon @click.stop ="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title class="app_bar text-left">Rat-Detector</v-app-bar-title>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
@@ -11,6 +11,12 @@
     <!-- Grid with Pictures -->
     <v-main>
       <v-container fluid>
+        <v-navigation-drawer v-model="drawer">
+          <v-list nav>
+          <v-list-item prepend-icon="mdi-camera-wireless " title="Sensor-Node" value="sensor-node"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-supervisor-circle" title="Team" value="team"></v-list-item>
+        </v-list>
+        </v-navigation-drawer>
         <v-row>
           <v-col v-for="(detection, index) in detections.slice().reverse()" v-bind:item="detection" v-bind:index="index"
             v-bind:key="detection._id" cols="2">
@@ -27,12 +33,10 @@
             </v-hover>
             <v-expand-transition>
               <v-card v-show="detection.showDetails" elevation="10" width="250" transition="scroll-y-transition">
-                <v-divider></v-divider>
-
                 <v-card-text>
-                  Confidence: {{detection.confidence}}
+                  Confidence: {{ detection.confidence }}
                   <br>
-                  Number of Rats: {{detection.numberOfRats}}
+                  Number of Rats: {{ detection.numberOfRats }}
                 </v-card-text>
               </v-card>
             </v-expand-transition>
@@ -50,6 +54,7 @@ export default {
   name: "HelloWorld",
   data() {
     return {
+      drawer: false,
       detections: [],
       error: "",
       text: "",
