@@ -15,6 +15,7 @@
           <v-list nav>
           <v-list-item prepend-icon="mdi-camera-wireless " title="Sensor-Node" value="sensor-node"></v-list-item>
           <v-list-item prepend-icon="mdi-message-alert" title="Notifications" value="notifications"></v-list-item>
+          <v-list-item prepend-icon="mdi-chart-box" title="Statistics" value="statistics"></v-list-item>
           <v-list-item prepend-icon="mdi-account-supervisor-circle" title="Team" value="team"></v-list-item>
         </v-list>
         </v-navigation-drawer>
