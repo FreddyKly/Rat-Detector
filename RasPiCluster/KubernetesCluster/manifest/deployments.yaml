@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-server
+  namespace: work-space
+  labels:
+    app: nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-server
+  template:
+    metadata:
+      labels:
+        app: nfs-server
+        name: nfs-server
+    spec:
+      containers:
+      - name: nfs-server
+        image: itsthenetwork/nfs-server-alpine:11-arm
+        env:
+          - name: SHARED_DIRECTORY
+            value: /exports
+        ports:
+          - name: nfs
+            containerPort: 2049
+          - name: mountd
+            containerPort: 20048
+          - name: rpcbind
+            containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /exports
+            name: mypvc
+      volumes:
+        - name: mypvc
+          persistentVolumeClaim:
+            claimName: local-claim
+      nodeSelector:
+        hdd: enabled
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-mariadb
+  namespace: work-space
+  labels:
+    app: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+      tier: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb
+        tier: mariadb
+    spec:
+      containers:
+        - image: tobi312/rpi-mariadb:10.3
+          name: mariadb
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-pass
+                  key: password
+          ports:
+            - containerPort: 3306
+              name: mariadb
+          volumeMounts:
+            - name: mariadb-persistent-storage
+              mountPath: /var/lib/mysql
+          resources:
+            limits:
+              cpu: '1'
+              memory: '512Mi'
+            requests:
+              cpu: '500m'
+              memory: '256Mi'
+      volumes:
+        - name: mariadb-persistent-storage
+          nfs:
+            server: 10.43.184.230
+            path: / 

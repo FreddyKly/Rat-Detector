@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv
+  namespace: work-space
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /media/usb/share #Path has to be made before implementing manifest; sudo mkdir /media/usb; sudo mkdir /media/usb/share
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: hdd
+          operator: In
+          values:
+          - enabled

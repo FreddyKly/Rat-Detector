@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nfs-server
+  namespace: work-space
+spec:
+  ports:
+    - name: nfs
+      port: 2049
+    - name: mountd
+      port: 20048
+    - name: rpcbind
+      port: 111
+  clusterIP: 10.43.184.230 # Cluster ip can be adapted; is optional
+  selector:
+    app: nfs-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-mariadb
+  namespace: work-space
+  labels:
+    app: mariadb
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mariadb
+    tier: mariadb
+  clusterIP: 10.43.184.232
