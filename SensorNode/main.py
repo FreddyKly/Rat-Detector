@@ -1,6 +1,8 @@
 import base64
+from io import BytesIO
 import json
 import os
+from PIL import Image
 
 import requests
 import torch
@@ -57,7 +59,7 @@ def main():
     model = torch.hub.load('ultralytics/yolov5', 'custom', 'weights/best.pt', force_reload=True)
 
     #bild von camera
-    img = '../../test_pi_camera/Rat_5.jpg'  # or file, Path, PIL, OpenCV, numpy, list
+    img = 'ushikawa.jpg'  # or file, Path, PIL, OpenCV, numpy, list
 
     results = model(img)
 
