@@ -1,3 +1,4 @@
-torch>=1.7.0
+# delete hashtag before "torch" when dependencies are being installed on a native machine instead of a docker container
+#torch>=1.7.0 
 opencv-python
-seaborn
+requests
