@@ -7,3 +7,8 @@ pip install -r requirements.txt
 ```
 docker image build -t sensor-node:0.0.1 ./SensorNode
 ```
+
+# Run Docker Image
+```
+docker run sensor-node:0.0.1
+```
