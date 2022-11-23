@@ -5,6 +5,8 @@ Go to the requirements.txt and delete the hashtag before "torch" when dependecie
 pip install -r requirements.txt
 ```
 
+and follow this tutorial for installing ultralytics: https://github.com/ultralytics/yolov5/blob/master/README.md
+
 # Build Docker Image
 Execute the following command from the root of this project:
 
