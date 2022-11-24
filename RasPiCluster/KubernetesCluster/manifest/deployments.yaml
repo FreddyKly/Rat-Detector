@@ -44,7 +44,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mariadb-mariadb
+  name: mariadb
   namespace: work-space
   labels:
     app: mariadb
