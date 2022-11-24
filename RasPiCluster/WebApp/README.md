@@ -57,13 +57,32 @@ npm run serve
 # Build Docker Image (On a RaspberryPI, for native machine leave "--platform linux/arm64" out)
 Execute the following command from the root of this project:
 
+### Client
+
 ```
-docker image build --platform linux/arm64 -t web-app:0.0.1 ./RasPiCluster/WebApp
+docker image build --platform linux/arm64 -t web-app-client:0.0.1 ./RasPiCluster/WebApp/client
+```
+
+### Server
+
+```
+docker image build --platform linux/arm64 -t web-app-server:0.0.1 ./RasPiCluster/WebApp/server
 ```
 
 # Run Docker Image
+
+### Client 
+
 Execute the following command from the root of this project:
 
 ```
-docker run -p 8080:8080 -p 3000:3000 web-app:0.0.1
+docker run -p 8080:8080 web-app-client:0.0.1
+```
+
+### Server 
+
+Execute the following command from the root of this project:
+
+```
+docker run -p 3000:3000 web-app-server:0.0.1
 ```
