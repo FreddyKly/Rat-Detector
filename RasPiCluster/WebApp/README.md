@@ -10,7 +10,7 @@ The Names of the databases and users are hardcoded right now. To use your own da
 ### Npm installations 
 1. Change directory
 ```
-cd RasPiCluster/WebApp
+cd RasPiCluster/WebApp/server
 ```
 
 2. Install dependencies for server
@@ -20,7 +20,7 @@ npm install
 
 3. Change directory into the client
 ```
-cd client
+cd ../client
 ```
 
 4. Install dependencies for the client
@@ -52,4 +52,18 @@ cd RasPiCluster/client
 2. Start the Front-end on localhost:8080
 ```
 npm run serve
+```
+
+# Build Docker Image (On a RaspberryPI, for native machine leave "--platform linux/arm64" out)
+Execute the following command from the root of this project:
+
+```
+docker image build --platform linux/arm64 -t web-app:0.0.1 ./RasPiCluster/WebApp
+```
+
+# Run Docker Image
+Execute the following command from the root of this project:
+
+```
+docker run -p 8080:8080 -p 3000:3000 web-app:0.0.1
 ```

@@ -7,11 +7,11 @@ pip install -r requirements.txt
 
 and follow this tutorial for installing ultralytics: https://github.com/ultralytics/yolov5/blob/master/README.md
 
-# Build Docker Image
+# Build Docker Image (On a RaspberryPI, for native machine leave "--platform linux/arm64" out)
 Execute the following command from the root of this project:
 
 ```
-docker image build -t sensor-node:0.0.1 ./SensorNode
+docker image build --platform linux/arm64 -t sensor-node:0.0.1 ./SensorNode
 ```
 
 # Run Docker Image
