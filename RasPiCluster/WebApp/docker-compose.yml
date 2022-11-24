@@ -1,0 +1,15 @@
+version: '3'
+services:
+  client:
+    build: ./client
+    volumes:
+      - ./client:/usr/src/WebApp/client
+    ports:
+      - 8080
+
+  server:
+    build: ./server
+    volumes:
+      - ./server:/usr/src/WebApp/server
+    ports:
+      - 5000
