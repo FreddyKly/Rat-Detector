@@ -1,15 +1,19 @@
-version: '3'
+version: '3.8'
 services:
   client:
+    # platform: linux/arm64
     build: ./client
-    volumes:
-      - ./client:/usr/src/WebApp/client
+    #volumes:
+      #- ./client:/usr/src/WebApp/client
+      #- ./client/node_modules:/usr/src/WebApp/node_modules
     ports:
-      - 8080
+      - 8080:8080
 
   server:
+    # platform: linux/arm64
     build: ./server
-    volumes:
-      - ./server:/usr/src/WebApp/server
+    #volumes:
+      #- ./server:/usr/src/WebApp/server
+      #- ./server/node_modules:/usr/src/WebApp/node_modules
     ports:
-      - 5000
+      - 5000:5000
