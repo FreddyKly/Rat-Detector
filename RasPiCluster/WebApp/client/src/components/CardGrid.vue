@@ -13,11 +13,16 @@
       <v-container fluid>
         <v-navigation-drawer v-model="drawer">
           <v-list nav>
-
-            <v-list-item prepend-icon="mdi-camera-wireless " title="Sensor-Node" value="sensor-node" @click="$router.push('/sensor-node')"></v-list-item>
-            <v-list-item prepend-icon="mdi-message-alert" title="Notifications" value="notifications" @click="$router.push('/notifications')"></v-list-item>
-            <v-list-item prepend-icon="mdi-chart-box" title="Statistics" value="statistics" @click="$router.push('/statistics')"></v-list-item>
-            <v-list-item prepend-icon="mdi-account-supervisor-circle" title="Team" value="team" @click="$router.push('/team')"></v-list-item>
+            <v-list-item prepend-icon="mdi-home" title="Home" value="home"
+              @click="$router.push('/')"></v-list-item>
+            <v-list-item prepend-icon="mdi-camera-wireless " title="Sensor-Node" value="sensor-node"
+              @click="$router.push('/sensor-node')"></v-list-item>
+            <v-list-item prepend-icon="mdi-message-alert" title="Notifications" value="notifications"
+              @click="$router.push('/notifications')"></v-list-item>
+            <v-list-item prepend-icon="mdi-chart-box" title="Statistics" value="statistics"
+              @click="$router.push('/statistics')"></v-list-item>
+            <v-list-item prepend-icon="mdi-account-supervisor-circle" title="Team" value="team"
+              @click="$router.push('/team')"></v-list-item>
           </v-list>
         </v-navigation-drawer>
         <v-row>
