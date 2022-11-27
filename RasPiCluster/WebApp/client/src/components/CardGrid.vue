@@ -2,7 +2,7 @@
   <v-app>
     <!-- App-Bar on top -->
     <v-app-bar color="teal-darken-4" elevate-on-scroll>
-      <v-app-bar-nav-icon @click.stop ="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-app-bar-title class="app_bar text-left">Rat-Detector</v-app-bar-title>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
@@ -13,11 +13,12 @@
       <v-container fluid>
         <v-navigation-drawer v-model="drawer">
           <v-list nav>
-          <v-list-item prepend-icon="mdi-camera-wireless " title="Sensor-Node" value="sensor-node"></v-list-item>
-          <v-list-item prepend-icon="mdi-message-alert" title="Notifications" value="notifications"></v-list-item>
-          <v-list-item prepend-icon="mdi-chart-box" title="Statistics" value="statistics"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-supervisor-circle" title="Team" value="team"></v-list-item>
-        </v-list>
+
+            <v-list-item prepend-icon="mdi-camera-wireless " title="Sensor-Node" value="sensor-node" @click="$router.push('/sensor-node')"></v-list-item>
+            <v-list-item prepend-icon="mdi-message-alert" title="Notifications" value="notifications" @click="$router.push('/notifications')"></v-list-item>
+            <v-list-item prepend-icon="mdi-chart-box" title="Statistics" value="statistics" @click="$router.push('/statistics')"></v-list-item>
+            <v-list-item prepend-icon="mdi-account-supervisor-circle" title="Team" value="team" @click="$router.push('/team')"></v-list-item>
+          </v-list>
         </v-navigation-drawer>
         <v-row>
           <v-col v-for="(detection, index) in detections.slice().reverse()" v-bind:item="detection" v-bind:index="index"
