@@ -53,7 +53,7 @@
 import detectionsService from "@/detectionsService";
 
 export default {
-  name: "HelloWorld",
+  name: "CardGrid",
   data() {
     return {
       drawer: false,
