@@ -60,6 +60,8 @@ spec:
   type: LoadBalancer
   ports:
     - port: 8080
+      targetPort: 8080
+      nodePort: 30880
   selector:
     name: webapp-client-v1
 ---
@@ -73,5 +75,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 5000
+      targetPort: 5000
+      nodePort: 30500
   selector:
     name: webapp-server-v1
