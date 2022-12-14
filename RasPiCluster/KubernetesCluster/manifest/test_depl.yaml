@@ -50,9 +50,8 @@ spec:
               containerPort: 8080
               protocol: TCP
 ---
-apiVersion: apps/v1
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: webapp-client-v1
   namespace: work-space
@@ -65,16 +64,16 @@ spec:
   selector:
     name: webapp-client-v1
 ---
-apiVersion: apps/v1
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: webapp-server-v1
   namespace: work-space
 spec:
   type: LoadBalancer
   ports:
-    - port: 5000
+    - protocol: TCP
+      port: 5000
       targetPort: 5000
       nodePort: 30500
   selector:
