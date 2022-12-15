@@ -1,8 +1,11 @@
 # Setup with Docker (Prod. and Testing)
 ## Docker-compose
 This is the easiest way of getting everything up and running.
-Install Docker with docker-compose.
+Install Docker with docker-compose (https://docs.docker.com/compose/install/).
 To check if the installation worked use <code>docker -v</code> and <code>docker-compose -v</code> in a Terminal.
+<br>
+<br>
+<b>If you try to run the <ins>docker-compose on a RaspberryPi</ins> (not been tested so far [only thing that has been tested was to [build](#build-docker) and [run](#run-docker) the Container individually) then make sure to uncomment line 4 and 13 ("platform: linux/arm64") in the docker-compose.yml, to ensure the Image is build for the correct architecture.</b>
 
 - Open a Terminal and navigate to the correct directory:
 ```
@@ -20,7 +23,7 @@ After this command wait for everything to download and install (maybe 5min) and 
 
 <hr>
 
-## Build Docker Image (For a RaspberryPI [for native machine leave "--platform linux/arm64" out])
+## <a name="build-docker"></a>Build Docker Image (For a RaspberryPI [for native machine leave "--platform linux/arm64" out])
 <b>This step will not be necessary if [this](#docker-compose) already worked</b>
 
 Execute the following command from the root of this project:
@@ -37,7 +40,7 @@ docker image build --platform linux/arm64 -t web-app-client:0.0.1 ./RasPiCluster
 docker image build --platform linux/arm64 -t web-app-server:0.0.1 ./RasPiCluster/WebApp/server
 ```
 
-### Run Docker Image
+### <a name="run-docker"></a>Run Docker Image
 
 #### Client 
 
