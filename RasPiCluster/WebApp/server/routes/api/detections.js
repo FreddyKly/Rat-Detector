@@ -1,7 +1,14 @@
 const express = require('express');
-const mongodb = require('mongodb');
+const mariadb = require('mariadb');
 
 const router = express.Router();
+
+const pool = mariadb.createPool({
+    host: 'localhost:', 
+    user:'root', 
+    password: 'password',
+    connectionLimit: 5
+});
 
 // Returns the DB "RatDetection" Collection
 async function loadRatDetectionCollection() {
