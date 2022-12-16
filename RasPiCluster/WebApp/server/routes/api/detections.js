@@ -1,47 +1,61 @@
 const express = require('express');
-const mariadb = require('mariadb');
+const pool = require('../../DBConnector/db_connector');
 
 const router = express.Router();
 
-const pool = mariadb.createPool({
-    host: 'localhost:', 
-    user:'root', 
-    password: 'password',
-    connectionLimit: 5
-});
 
-// Returns the DB "RatDetection" Collection
-async function loadRatDetectionCollection() {
-    const client = await mongodb.MongoClient.connect('mongodb+srv://freddykly:RatDetector@cluster0.4wp40qf.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true});
+// Returns the rows of the "detection" table
+async function loadDetections() {
+    try{
+        const selectAllQuery = 'SELECT * FROM detections';
 
-    return client.db('cluster0').collection('ratDetections');
+        const detections = await pool.query(selectAllQuery);
+
+        console.log(detections);
+
+        return detections;
+
+    } catch (error) {
+        throw error;
+    }
+        
 }
 
 // Get
-// get the list of all RatDetections
+// get the list of all detections
 router.get('/', async (req, res) => {
-    const ratDetections = await loadRatDetectionCollection();
-    res.send(await ratDetections.find({}).toArray());
+    try {
+        const detections = await loadDetections();
+
+        res.send(await detections.find({}).toArray());
+
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+    
 })
 
 // Post
-// Save a RatDetection to the database
+// Save a Detection to the database
 router.post('/', async (req, res) =>{
+    try {
+        const insertQuery = 'INSERT INTO detections value (?, ?, ?, ?, ?, ?)';
 
-    const ratDetections = await loadRatDetectionCollection();
-    await ratDetections.insertOne({
-        image: req.body.image,
-        confidence: req.body.confidence,
-        numberOfRats: req.body.numberOfRats,
-        createdAt: new Date()
-    });
-    res.status(201).send()
+        const res = await pool.query(insertQuery, [null, 'caption', req.body.image, new Date(), 2, 95]);
+
+        res.status(201).send();
+
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+
+    
 });
 
 // Delete
-// Delete a RatDetection from the Database by ID
+// Delete a Detection from the Database by ID
 router.delete('/:id', async (req, res) =>{
-    const ratDetections = await loadRatDetectionCollection();
+    const ratDetections = await loadDetections();
     await ratDetections.deleteOne({
         _id: new mongodb.ObjectId(req.params.id)
     });
