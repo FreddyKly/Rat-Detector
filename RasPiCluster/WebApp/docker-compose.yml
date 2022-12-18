@@ -20,6 +20,7 @@ services:
   mariadb:
     image: mariadb
     restart: always
+    command: --init-file /var/lib/mysql/init_database_and_table.sql
     environment:
       MYSQL_ROOT_PASSWORD: password
     volumes:
