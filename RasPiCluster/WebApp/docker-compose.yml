@@ -5,21 +5,17 @@ services:
     build: ./client
     ports:
       - 8080:8080
-    # networks:
-    #   - serverClientNet
 
   server:
     # platform: linux/arm64
     build: ./server
     depends_on:
       - mariadb
-    # networks:
-    #   - serverClientNet
-    #   - serverDatabaseNet
     ports:
       - 5000:5000
 
   mariadb:
+    # platform: linux/arm64
     image: mariadb
     restart: always
     # command: --init-file /var/lib/mysql/init_database_and_table.sql
@@ -28,11 +24,5 @@ services:
     volumes:
       - ./data:/var/lib/mysql
       - ./data/sql_scripts:/docker-entrypoint-initdb.d
-    # networks:
-    #   - serverDatabaseNet
     ports:
       - 3306:3306
-
-# networks:
-#   serverClientNet:
-#   serverDatabaseNet:

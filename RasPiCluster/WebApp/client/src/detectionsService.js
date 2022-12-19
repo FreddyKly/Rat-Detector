@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = 'http://server:5000/api/detections';
+const url = 'http://localhost:5000/api/detections';
 
 class detectionsService {
     // Get detections

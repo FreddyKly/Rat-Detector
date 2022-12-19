@@ -71,7 +71,8 @@ export default {
   async created() {
     try {
       this.detections = await detectionsService.getDetections();
-      console.log(this.detections);
+      console.log('First Element of Database', this.detections[0]);
+      console.log('Image Data', this.detections[0].img);
     } catch (err) {
       this.error = err.message;
     }

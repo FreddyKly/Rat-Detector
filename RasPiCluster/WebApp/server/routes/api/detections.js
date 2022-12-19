@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
 
         console.log('Detections: ', detections)
 
-        res.send(await detections);
+        res.send(detections);
 
     } catch (error) {
         res.status(400).send(error.message);
