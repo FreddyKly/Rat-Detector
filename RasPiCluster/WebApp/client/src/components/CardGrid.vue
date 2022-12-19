@@ -31,7 +31,7 @@
             <v-hover>
               <template v-slot:default="{ isHovering, props }">
                 <v-card height="250" width="250" :elevation="isHovering ? 15 : 1" v-bind="props">
-                  <v-img :src="`data:image/jpg;base64,${detection.image}`" class="align-end" v-bind="props"
+                  <v-img :src="`data:image/jpg;base64,${detection.img}`" class="align-end" v-bind="props"
                     :gradient="isHovering ? 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,.45)' : 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.3), rgba(0,0,0,.5)'"
                     @click="detection.showDetails = !detection.showDetails">
                     <v-card-title class="text-white"> {{ detection.createdAt }} </v-card-title>
@@ -72,7 +72,7 @@ export default {
     try {
       this.detections = await detectionsService.getDetections();
       console.log('First Element of Database', this.detections[0]);
-      console.log('Image Data', this.detections[0].img);
+      console.log('Image Data', this.detections[1].img);
     } catch (err) {
       this.error = err.message;
     }

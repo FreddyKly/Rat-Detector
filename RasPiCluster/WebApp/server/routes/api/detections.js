@@ -31,9 +31,9 @@ router.get('/', async (req, res) => {
 
         const detections = await loadDetections();
 
-        console.log('Detections: ', detections)
+        // console.log('Detections: ', detections)
 
-        res.send(detections);
+        res.send(await detections);
 
     } catch (error) {
         res.status(400).send(error.message);
@@ -47,11 +47,13 @@ router.post('/', async (req, res) =>{
     try {
         console.log('Registered a POST-Request')
 
-        const insertQuery = 'INSERT INTO detections value (?, ?, ?, ?, ?, ?)';
+        con = await pool.getConnection();
 
-        const res = await pool.query(insertQuery, [null, 'caption', req.body.image, new Date(), 2, 95]);
+        const insertQuery = 'INSERT INTO detections VALUES (?, ?, ?, ?, ?)';
 
-        res.status(201).send();
+        const result = await con.query(insertQuery, [null, req.body.image, new Date(), 2, 95]);
+
+        res.status(201).send('Entry was successfully inserted!');
 
     } catch (error) {
         res.status(400).send(error.message);
