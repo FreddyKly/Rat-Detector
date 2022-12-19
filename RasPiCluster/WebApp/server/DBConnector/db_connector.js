@@ -1,11 +1,12 @@
 const mariadb = require('mariadb');
 
 const pool = mariadb.createPool({
-    host: 'localhost',
+    host: 'mariadb',
     port: '3306', 
     user:'root', 
     password: 'password',
-    connectionLimit: 5
+    connectionLimit: 5,
+    database: 'RatDetections'
 });
 
 pool.getConnection((err, connection) => {

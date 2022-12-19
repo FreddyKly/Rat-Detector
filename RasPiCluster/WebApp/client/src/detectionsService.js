@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = 'http://localhost:5000/api/detections';
+const url = 'http://server:5000/api/detections';
 
 class detectionsService {
     // Get detections
@@ -8,7 +8,11 @@ class detectionsService {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await axios.get(url);
+
+                console.log('There was a Response to the Get-Request: ', res)
+
                 const data = res.data;
+
                 resolve(
                     data.map(detection => ({
                         ...detection,
@@ -16,6 +20,7 @@ class detectionsService {
                         showDetails: false
                     })
                 ));
+                
             } catch(err) {
                 reject(err);
             }

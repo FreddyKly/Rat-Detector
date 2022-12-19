@@ -9,9 +9,11 @@ async function loadDetections() {
     try{
         const selectAllQuery = 'SELECT * FROM detections';
 
-        const detections = await pool.query(selectAllQuery);
+        con = await pool.getConnection();
 
-        console.log(detections);
+        const detections = await con.query(selectAllQuery);
+
+        console.log('Detections were queried successfully! Number of Detections: ', detections.length);
 
         return detections;
 
@@ -25,9 +27,13 @@ async function loadDetections() {
 // get the list of all detections
 router.get('/', async (req, res) => {
     try {
+        console.log('Registered a Get-Request!')
+
         const detections = await loadDetections();
 
-        res.send(await detections.find({}).toArray());
+        console.log('Detections: ', detections)
+
+        res.send(await detections);
 
     } catch (error) {
         res.status(400).send(error.message);
@@ -39,6 +45,8 @@ router.get('/', async (req, res) => {
 // Save a Detection to the database
 router.post('/', async (req, res) =>{
     try {
+        console.log('Registered a POST-Request')
+
         const insertQuery = 'INSERT INTO detections value (?, ?, ?, ?, ?, ?)';
 
         const res = await pool.query(insertQuery, [null, 'caption', req.body.image, new Date(), 2, 95]);

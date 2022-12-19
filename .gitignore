@@ -129,5 +129,5 @@ dmypy.json
 
 node_modules
 /RasPiCluster/WebApp/data/*
-!/RasPiCluster/WebApp/data/init_database_and_table.sql
+!/RasPiCluster/WebApp/data/sql_scripts
 /.vscode
