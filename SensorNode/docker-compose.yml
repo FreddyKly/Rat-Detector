@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  sensor-node:
+    image: ultralytics/yolov5
+    volumes:
+      - ./:/usr/src/app/sensor-node
+    command: bash -c "python3 -m pip install -r ./sensor-node/requirements.txt && cd /usr/src/app/sensor-node && python3 -m main"
+    stdin_open: true 
+    tty: true

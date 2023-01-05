@@ -128,3 +128,6 @@ dmypy.json
 .pyre/
 
 node_modules
+/RasPiCluster/WebApp/data/*
+!/RasPiCluster/WebApp/data/sql_scripts
+/.vscode
