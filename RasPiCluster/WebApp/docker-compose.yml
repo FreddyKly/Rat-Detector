@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   client:
-    # platform: linux/arm64
+    platform: linux/arm64
     build: ./client
     #volumes:
       #- ./client:/usr/src/WebApp/client
@@ -10,7 +10,7 @@ services:
       - 8080:8080
 
   server:
-    # platform: linux/arm64
+    platform: linux/arm64
     build: ./server
     #volumes:
       #- ./server:/usr/src/WebApp/server

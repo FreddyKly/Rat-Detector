@@ -1,4 +1,4 @@
-FROM ultralytics/yolov5:latest
+FROM ultralytics/yolov5:v6.2-arm64
 
 WORKDIR /Sensor-Node
 

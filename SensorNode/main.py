@@ -3,7 +3,7 @@ from io import BytesIO
 import json
 import os
 from PIL import Image
-
+import time
 import requests
 import torch
 
@@ -55,27 +55,29 @@ def run(runfile):
   with open(runfile,"r") as rnf:
     exec(rnf.read())
 
-def main():
+def main():  
+
     model = torch.hub.load('ultralytics/yolov5', 'custom', 'weights/best.pt', force_reload=True)
 
-    #bild von camera
-    img = 'ushikawa.jpg'  # or file, Path, PIL, OpenCV, numpy, list
+    while True:
+        time.sleep(2)
 
-    results = model(img)
+        img = "picture.jpg"
 
-    results.ims  # array of original images (as np array) passed to model for inference
-    results.render()  # updates results.ims with boxes and labels
-    for im in results.ims:
-        buffered = BytesIO()
-        im_base64 = Image.fromarray(im)
-        im_base64.save(buffered, format="JPEG")
-        print(base64.b64encode(buffered.getvalue()).decode('utf-8'))  # base64 encoded image with results
+        results = model(img)
 
-    encodedImg = provideEncodedImage()
-    # timeStamp = 
-    confidence = provideConfidence()
-    numberOfRats = provideNumberOfRats()
-    sendImageMetaData(encodedImageData=encodedImg, confidence=confidence, numberOfRats=numberOfRats)
+        results.ims  # array of original images (as np array) passed to model for inference
+        results.render()  # updates results.ims with boxes and labels
+        for im in results.ims:
+            buffered = BytesIO()
+            im_base64 = Image.fromarray(im)
+            im_base64.save(buffered, format="JPEG")
+
+        encodedImg = provideEncodedImage()
+        # timeStamp = 
+        confidence = provideConfidence()
+        numberOfRats = provideNumberOfRats()
+        sendImageMetaData(encodedImageData=encodedImg, confidence=confidence, numberOfRats=numberOfRats)
 
 
 if __name__ == "__main__":
