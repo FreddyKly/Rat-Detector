@@ -18,5 +18,5 @@ docker image build --platform linux/arm64 -t sensor-node:0.0.1 ./SensorNode
 Execute the following command from the root of this project:
 
 ```
-docker run sensor-node:0.0.1
+docker run --network="host" sensor-node:0.0.1
 ```
