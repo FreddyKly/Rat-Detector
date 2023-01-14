@@ -19,6 +19,8 @@ async function loadDetections() {
 
     } catch (error) {
         throw error;
+    } finally {
+        if (con) return conn.end();
     }
         
 }
@@ -57,6 +59,8 @@ router.post('/', async (req, res) =>{
 
     } catch (error) {
         res.status(400).send(error.message);
+    } finally {
+        if (con) return con.end();
     }
 
     
