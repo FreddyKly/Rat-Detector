@@ -20,7 +20,8 @@ async function loadDetections() {
     } catch (error) {
         throw error;
     } finally {
-        if (con) return conn.end();
+        console.log('End-Connection to Database')
+        if (con) return con.end();
     }
         
 }
@@ -33,11 +34,12 @@ router.get('/', async (req, res) => {
 
         const detections = await loadDetections();
 
-        // console.log('Detections: ', detections)
+        console.log('Detections: ', detections)
 
         res.send(await detections);
 
     } catch (error) {
+        console.log(error)
         res.status(400).send(error.message);
     }
     
