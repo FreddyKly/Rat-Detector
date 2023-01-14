@@ -13,15 +13,15 @@ async function loadDetections() {
 
         const detections = await con.query(selectAllQuery);
 
-        console.log('Detections were queried successfully! Number of Detections: ', detections.length);
+        // console.log('Detections were queried successfully! Number of Detections: ', detections.length);
 
         return detections;
 
     } catch (error) {
         throw error;
     } finally {
-        console.log('End-Connection to Database')
-        if (con) return con.end();
+        // console.log('End-Connection to Database')
+        if (con) con.end();
     }
         
 }
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
 
         const detections = await loadDetections();
 
-        console.log('Detections: ', detections)
+        // console.log('Detections: ', detections)
 
         res.send(await detections);
 
@@ -62,7 +62,7 @@ router.post('/', async (req, res) =>{
     } catch (error) {
         res.status(400).send(error.message);
     } finally {
-        if (con) return con.end();
+        if (con) con.end();
     }
 
     
