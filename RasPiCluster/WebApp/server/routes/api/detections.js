@@ -1,40 +1,77 @@
 const express = require('express');
-const mongodb = require('mongodb');
+const pool = require('../../DBConnector/db_connector');
 
 const router = express.Router();
 
-// Returns the DB "RatDetection" Collection
-async function loadRatDetectionCollection() {
-    const client = await mongodb.MongoClient.connect('mongodb+srv://freddykly:RatDetector@cluster0.4wp40qf.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true});
 
-    return client.db('cluster0').collection('ratDetections');
+// Returns the rows of the "detection" table
+async function loadDetections() {
+    try{
+        const selectAllQuery = 'SELECT * FROM detections';
+
+        con = await pool.getConnection();
+
+        const detections = await con.query(selectAllQuery);
+
+        // console.log('Detections were queried successfully! Number of Detections: ', detections.length);
+
+        return detections;
+
+    } catch (error) {
+        throw error;
+    } finally {
+        // console.log('End-Connection to Database')
+        if (con) con.end();
+    }
+        
 }
 
 // Get
-// get the list of all RatDetections
+// get the list of all detections
 router.get('/', async (req, res) => {
-    const ratDetections = await loadRatDetectionCollection();
-    res.send(await ratDetections.find({}).toArray());
+    try {
+        console.log('Registered a Get-Request!')
+
+        const detections = await loadDetections();
+
+        // console.log('Detections: ', detections)
+
+        res.send(await detections);
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).send(error.message);
+    }
+    
 })
 
 // Post
-// Save a RatDetection to the database
+// Save a Detection to the database
 router.post('/', async (req, res) =>{
+    try {
+        console.log('Registered a POST-Request')
 
-    const ratDetections = await loadRatDetectionCollection();
-    await ratDetections.insertOne({
-        image: req.body.image,
-        confidence: req.body.confidence,
-        numberOfRats: req.body.numberOfRats,
-        createdAt: new Date()
-    });
-    res.status(201).send()
+        con = await pool.getConnection();
+
+        const insertQuery = 'INSERT INTO detections VALUES (?, ?, ?, ?, ?)';
+
+        const result = await con.query(insertQuery, [null, req.body.image, new Date(), 2, 95]);
+
+        res.status(201).send('Entry was successfully inserted!');
+
+    } catch (error) {
+        res.status(400).send(error.message);
+    } finally {
+        if (con) con.end();
+    }
+
+    
 });
 
 // Delete
-// Delete a RatDetection from the Database by ID
+// Delete a Detection from the Database by ID
 router.delete('/:id', async (req, res) =>{
-    const ratDetections = await loadRatDetectionCollection();
+    const ratDetections = await loadDetections();
     await ratDetections.deleteOne({
         _id: new mongodb.ObjectId(req.params.id)
     });

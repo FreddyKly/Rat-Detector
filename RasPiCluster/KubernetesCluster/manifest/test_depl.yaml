@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-server-v1
+  name: webapp-server
   namespace: work-space
   labels:
-    name: webapp-server-v1
+    name: webapp-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: webapp-server-v1
+      name: webapp-server
   template:
     metadata:
       labels:
-        name: webapp-server-v1
+        name: webapp-server
     spec:
       containers:
-        - name: webapp-server-v1
-          image: kaiser0815/webapp-server:v1
+        - name: webapp-server
+          image: kaiser0815/webapp-server:v4
           imagePullPolicy: Always
           ports:
             - name: http
@@ -27,23 +27,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-client-v1
+  name: webapp-client
   namespace: work-space
   labels:
-    name: webapp-client-v1
+    name: webapp-client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: webapp-client-v1
+      name: webapp-client
   template:
     metadata:
       labels:
-        name: webapp-client-v1
+        name: webapp-client
     spec:
       containers:
-        - name: webapp-client-v1
-          image: kaiser0815/webapp-client:v1
+        - name: webapp-client
+          image: kaiser0815/webapp-client:v4
           imagePullPolicy: Always
           ports:
             - name: http
@@ -53,7 +53,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp-client-v1
+  name: webapp-client
   namespace: work-space
 spec:
   type: LoadBalancer
@@ -62,12 +62,12 @@ spec:
       targetPort: 8080
       nodePort: 30880
   selector:
-    name: webapp-client-v1
+    name: webapp-client
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: webapp-server-v1
+  name: webapp-server
   namespace: work-space
 spec:
   type: LoadBalancer
@@ -77,4 +77,4 @@ spec:
       targetPort: 5000
       nodePort: 30500
   selector:
-    name: webapp-server-v1
+    name: webapp-server
