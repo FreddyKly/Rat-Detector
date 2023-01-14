@@ -1,6 +1,6 @@
 import axios from 'axios';
-const url = 'http://localhost:5000/api/detections';
-
+//const url = 'http://localhost:5000/api/detections';
+  const url = 'http://192.168.188.26:30500/api/detections';
 class detectionsService {
     // Get detections
     static getDetections() {

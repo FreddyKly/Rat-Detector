@@ -2,8 +2,9 @@ const mariadb = require('mariadb');
 
 const pool = mariadb.createPool({
     // host: 'mariadb', uncomment when running the database in docker
-    host: 'localhost', // uncomment when running database on native machine 
-    port: '3306', 
+   // host: 'localhost', // uncomment when running database on native machine 
+	host:'10.43.184.232',
+   port: '3306', 
     user:'root', 
     password: 'password',
     connectionLimit: 5,
