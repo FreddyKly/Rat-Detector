@@ -1,9 +1,10 @@
 version: '3.8'
 services:
   sensor-node:
-    image: ultralytics/yolov5
+    image: ultralytics/yolov5:v6.2-arm64
     volumes:
       - ./:/usr/src/app/sensor-node
+    network_mode: "host"
     command: bash -c "python3 -m pip install -r ./sensor-node/requirements.txt && cd /usr/src/app/sensor-node && python3 -m main"
     stdin_open: true 
     tty: true
