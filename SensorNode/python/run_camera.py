@@ -1,23 +1,24 @@
 from picamera2 import Picamera2, Preview
-from libcamera import controls
 import time
 
-
+print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
 picam2 = Picamera2()
-camera_config = picam2.create_preview_configuration({"size": (640, 640)})
+camera_config = picam2.create_preview_configuration({"size": (3280, 2464)})
 picam2.configure(camera_config)
 
 picam2.start_preview(Preview.QTGL)
 
 picam2.start(show_preview=True)
+#picam2.start()
 print("Camera started")
-#picam2.set_controls({"AfMode": 2, "AfTrigger": 0})
-time.sleep(4)
+
+time.sleep(2)
 
 while True:
     try:
         picam2.capture_file("picture.jpg")
         time.sleep(2)
+        print("Face")
     except KeyboardInterrupt:
         picam2.close()
         print("Camera closed")

@@ -1,0 +1,6 @@
+python-prctl==1.7
+picamera2==0.3.6
+#libcamera
+#Pillow==9.4.0
+#requests==2.25.1
+#torch==1.13.0

@@ -1,10 +1,31 @@
 version: '3.8'
+
 services:
-  sensor-node:
-    image: ultralytics/yolov5:v6.2-arm64
-    volumes:
-      - ./:/usr/src/app/sensor-node
+  
+  #sensor-node:
+   # image: ultralytics/yolov5:v6.2-arm64
+  #  volumes:
+ #     - ./:/usr/src/app/sensor-node
+ #   network_mode: "host"
+#    command: bash -c "python3 -m pip install -r ./sensor-node/requirements_yolo.txt && cd /usr/src/app/sensor-node && python3 -m main"
+#    stdin_open: true 
+#    tty: true
+#    networks: 
+#      - localnet
+
+  camera:
+    #image: python:3.9-bullseye
+    container_name: python_camera
+    #working_dir: /usr/src/app
+    build: ./python
+    command: python3 ./run_camera.py
+    #volumes:
+    #  - ./:/usr/src/app/sensor-node
     network_mode: "host"
-    command: bash -c "python3 -m pip install -r ./sensor-node/requirements.txt && cd /usr/src/app/sensor-node && python3 -m main"
+    #command: bash -c "echo QQQ1 && echo QQQ && python3 -m pip install -r ./sensor-node/requirements_picam.txt && cd /usr/src/app/sensor-node && python3 -m run_camera"
+    #command: bash -c "echo QQQ1 && apt-get update && apt update && apt install -y sudo && sudo apt-get install build-essential libcap-dev && echo QQQ7 && sudo apt install -y python3-libcamera && echo QQQ8 && python3 -m pip install -r ./sensor-node/requirements_picam.txt && cd /usr/src/app/sensor-node && python3 -m run_camera"
     stdin_open: true 
     tty: true
+    #networks: 
+    #  - localnet
+  
