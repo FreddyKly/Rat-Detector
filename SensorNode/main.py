@@ -16,7 +16,6 @@ sendURL = "https://api.telegram.org/bot" + botToken + "/sendMessage"
 sendPhotoURL = "https://api.telegram.org/bot" + botToken + "/sendPhoto"
 picpath = r"/usr/src/app/sensor-node/picture.jpg"
 
-
 # check for Telegram update
 def update (url):
 
@@ -201,6 +200,9 @@ def handler_user_input():
     except Exception as e:
         print ("Error:", e)
 
+####################
+# END TELEGRAM PART#
+####################
 
 """
 Assemble all the necessary data points and send them to the back-end
@@ -208,7 +210,7 @@ Assemble all the necessary data points and send them to the back-end
 def sendImageMetaData(encodedImageData, confidence, numberOfRats):
     imageMetaData = {
     "image": encodedImageData,
-    # "timeStamp": timeStamp,       Discuss if timestamp should be provided by Front- or Back-end
+    # "timeStamp": timeStamp,       Discuss if timestamp should be provided by front- or back-end
     "confidence": confidence,
     "numberOfRats": numberOfRats
     }
@@ -223,16 +225,6 @@ def sendImageMetaData(encodedImageData, confidence, numberOfRats):
         print('Success')
     else:
         print(response)
-
-
-# Provides the Image as encoded base64
-def provideEncodedImage(img):
-    return base64.encodebytes(img).decode('utf-8')
-
-
-def run(runfile):
-  with open(runfile,"r") as rnf:
-    exec(rnf.read())
 
 
 def main():  
@@ -267,7 +259,7 @@ def main():
             results.ims  # array of original images (as np array) passed to model for inference
             results.render()  # updates results.ims with boxes and labels            
 
-            handler_user_input()
+            #handler_user_input() #checks for Telegram input
                                 
             if numberOfRats > 0:           
                 for im in results.ims:
@@ -277,6 +269,8 @@ def main():
                     encodedImg = base64.b64encode(buffered.getvalue()).decode('utf-8')
                     #sendImageMetaData(encodedImageData=encodedImg, confidence=confidence, numberOfRats=numberOfRats)
 
+                    # sends to Telegram bot
+                    '''  
                     with open("config.json", "r") as jsonFile:
                         config_data = json.load(jsonFile)                    
                     for i in (config_data['Subscriber']):
@@ -286,7 +280,7 @@ def main():
                             user_nr = check_user(userchatid)
                             config_data['Subscriber'][user_nr]['last_photo'] = time.time()
                             with open("config.json", "w") as jsonFile:
-                                json.dump(config_data, jsonFile, indent=2)
+                                json.dump(config_data, jsonFile, indent=2)'''
 
             # timeStamp = 
         except IOError as e:    
