@@ -28,7 +28,27 @@ At first execute the following command on each of the raspberries to update the 
 
 `sudo apt update && upgrade`
 
-The Raspberry Pis will from now on be called nodes. 
+This can be done simultaneously to reduce the waiting period. We start with the masternode and execute the following command:
+
+`curl -sfL https://get.k3s.io | sh -`
+
+During the installation an error will occur, but the installation itself wont be interrupted. Thus execute:
+
+`sudo nano /boot/cmdline.txt`
+
+This opens the cmdline.txt document in a texteditor. The document has only one line and needs to be enhanced by:
+
+`cgroup_memory=1 cgroup_enable=memory`
+
+It is important to not leave the first line and accidentaly insert a line break. Before the masternode is rebooted we have to get the node-token. Hence:
+
+`sudo cat /var/lib/rancher/k3s/server/node-token`
+
+This string is important for the installation of the worker nodes. Hence it has to be temporarily safed somewhere. After that reboot the masternode and continue with the workernodes.
+
+`sudo reboot`
+
+The installation of the workernodes is almost identical
 
 
 
