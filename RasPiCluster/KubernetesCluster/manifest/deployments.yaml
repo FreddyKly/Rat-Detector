@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: work-space
+  labels:
+    app: work-space
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,6 +26,7 @@ spec:
       containers:
       - name: nfs-server
         image: itsthenetwork/nfs-server-alpine:11-arm
+        imagePullPolicy: IfNotPresent
         env:
           - name: SHARED_DIRECTORY
             value: /exports
@@ -39,7 +47,7 @@ spec:
           persistentVolumeClaim:
             claimName: local-claim
       nodeSelector:
-        hdd: enabled
+        SSD: enabled
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -64,6 +72,7 @@ spec:
     spec:
       containers:
         - image: tobi312/rpi-mariadb:10.3
+          imagePullPolicy: IfNotPresent
           name: mariadb
           env:
             - name: MYSQL_ROOT_PASSWORD
@@ -77,15 +86,60 @@ spec:
           volumeMounts:
             - name: mariadb-persistent-storage
               mountPath: /var/lib/mysql
-          resources:
-            limits:
-              cpu: '1'
-              memory: '512Mi'
-            requests:
-              cpu: '500m'
-              memory: '256Mi'
       volumes:
         - name: mariadb-persistent-storage
           nfs:
-            server: 10.43.184.230
+            server: 10.43.184.231
             path: / 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-server
+  namespace: work-space
+  labels:
+    name: webapp-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: webapp-server
+  template:
+    metadata:
+      labels:
+        name: webapp-server
+    spec:
+      containers:
+        - name: webapp-server
+          image: kaiser0815/webapp-server:v4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-client
+  namespace: work-space
+  labels:
+    name: webapp-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: webapp-client
+  template:
+    metadata:
+      labels:
+        name: webapp-client
+    spec:
+      containers:
+        - name: webapp-client
+          image: kaiser0815/webapp-client:v4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
