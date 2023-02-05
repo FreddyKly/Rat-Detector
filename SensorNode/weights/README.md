@@ -1,9 +1,12 @@
-**Object Detection**
+# Object Detection
 
-For the object detection the Yolov5 framework was used.
+For the object detection the Yolov5 framework was used. After researching which frameworks are used in rat/pest detection, we found, that the Yolo framework was used commonly. We also found that Yolov5 was used e.g. in this paper: https://peerj.com/preprints/27880.pdf
+Therefore we chose to use Yolov5. 
+
 Yolov5 is available at: https://github.com/ultralytics/yolov5
 
-**Training**
+
+## Training
 
 For the training setup follow the tutorial at: https://wandb.ai/onlineinference/YOLO/reports/YOLOv5-Object-Detection-on-Windows-Step-By-Step-Tutorial---VmlldzoxMDQwNzk4
 
