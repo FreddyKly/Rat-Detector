@@ -13,8 +13,7 @@
       <v-container fluid>
         <v-navigation-drawer v-model="drawer">
           <v-list nav>
-            <v-list-item prepend-icon="mdi-home" title="Home" value="home"
-              @click="$router.push('/')"></v-list-item>
+            <v-list-item prepend-icon="mdi-home" title="Home" value="home" @click="$router.push('/')"></v-list-item>
             <v-list-item prepend-icon="mdi-camera-wireless " title="Sensor-Node" value="sensor-node"
               @click="$router.push('/sensor-node')"></v-list-item>
             <v-list-item prepend-icon="mdi-message-alert" title="Notifications" value="notifications"
@@ -26,7 +25,7 @@
           </v-list>
         </v-navigation-drawer>
         <v-row>
-          <v-col v-for="(detection, index) in detections.slice().reverse()" v-bind:item="detection" v-bind:index="index"
+          <v-col v-for="(detection, index) in detections.slice()" v-bind:item="detection" v-bind:index="index"
             v-bind:key="detection._id" cols="2">
             <v-hover>
               <template v-slot:default="{ isHovering, props }">
@@ -34,7 +33,13 @@
                   <v-img :src="`data:image/jpg;base64,${detection.img}`" class="align-end" v-bind="props"
                     :gradient="isHovering ? 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.1), rgba(0,0,0,.45)' : 'to bottom, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0.3), rgba(0,0,0,.5)'"
                     @click="detection.showDetails = !detection.showDetails">
-                    <v-card-title class="text-white"> {{ detection.createdAt }} </v-card-title>
+                    <v-card-title class="text-white"> {{
+                      detection.createdAt.getHours() + ":" +
+                        detection.createdAt.getMinutes() + " " +
+                        detection.createdAt.getDate() + "." +
+                        detection.createdAt.getMonth() + "." +
+                        detection.createdAt.getFullYear()
+                    }} </v-card-title>
                   </v-img>
                 </v-card>
               </template>
@@ -43,7 +48,8 @@
               <v-card v-show="detection.showDetails" elevation="10" width="250" transition="scroll-y-transition">
                 <v-card-text>
                   Confidence: {{ detection.confidence }}
-                  <br>
+                </v-card-text>
+                <v-card-text>
                   Number of Rats: {{ detection.numberOfRats }}
                 </v-card-text>
               </v-card>
@@ -72,9 +78,8 @@ export default {
     try {
       this.detections = await detectionsService.getDetections();
       console.log('First Element of Database', this.detections[0]);
-      console.log('Image Data', this.detections[1].img);
     } catch (err) {
-      this.error = err.message;
+      console.log(err.message);
     }
   },
 };
