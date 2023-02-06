@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `detections` (
     `img` LONGTEXT NOT NULL,
     `createdAt` DATETIME NOT NULL,
     `numberOfRats` INT UNSIGNED,
-    `confidence` INT UNSIGNED,
+    `confidence` TINYTEXT,
   PRIMARY KEY (`id_pic`)
 );
 INSERT INTO RatDetections.detections (img, createdAt, numberOfRats, confidence)
