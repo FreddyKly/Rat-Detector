@@ -27,7 +27,7 @@ A large part of this installation manual originates from this [tutorial](https:/
 The next steps desrcribe the installation of the cluster.\
 Execute the following command on each of the raspberries to update and upgrade the software:
 
-    sudo apt update && upgrade
+    sudo apt update && sudo apt upgrade -y
 
 This can be done simultaneously to reduce the waiting period.\
  After that execute the following command on the masternode:
