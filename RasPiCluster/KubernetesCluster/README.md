@@ -12,7 +12,7 @@ The follwing hardware is required during this manual:
 ## Preparations
 
 At first install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) on your PC. Other applications do also work to flash the OS image on the micro SD memory cards, but this particular has two advantages. The imager has the Raspberry Pi operatingsystems already preselected. It also has an "advanced settings" menu, which can be used to assign a hostname, enable SSH, assign a username and a password, and set up the Wifi connection to your network. This means that you only have to plug the micro SD card into the Raspberry after flashing.
-The operating system we are using is **Raspberry PI OS (32-BIT)**. The main reason for using a 32-Bit architecture is to reduce the overhead. Raspberry Pis have low computing power compared servers used in a datacenter.
+The operating system we are using is **Raspberry PI OS Lite (32-BIT)**. The main reason for using a 32-Bit architecture is to reduce the overhead. Raspberry Pis have low computing power compared servers used in a datacenter.
 It seems reasonable to give the devices a hostname equivalent to their purpose. For example "masternodeX" or "workernodeX". This setup was build with one masternode and three workernodes. Therefore we named the devices: 
 * masternode1
 * workernode1
