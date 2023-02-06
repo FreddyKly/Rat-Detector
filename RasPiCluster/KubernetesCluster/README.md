@@ -91,6 +91,10 @@ After that we inserted the following string into the file system table /etc/fsta
 
     UUID=<UUID_of_SSD>   /media/usb   ntfs   auto,nofail,sync,users,rw   0   0
 
+After that reboot the device again with:
+
+    sudo reboot
+
 With this configuration the SSD is always mounted into the defined directory after a reboot. \
 After that we copy the manifest directory to the masternode and apply it to the cluster with: 
 
