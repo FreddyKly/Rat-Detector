@@ -111,10 +111,9 @@ Since we created our own namespace we have to extend the commands by "-n work-sp
 This opens the bash of the pod with the MariaDB. To get the MariaDB console type:
 
     mariadb -p
-
-    password
-
-The password of the MariaDB is "password". It is saved in the "secret.yaml" file and is base64 encoded.
+ 
+Enter the password as requested. The password of the MariaDB is currently "password". 
+It is saved in the "secret.yaml" file and is base64 encoded. Do not use this password in production.
 
 ### Kubernetes Manifest
 The "manifest" directory has several files that are applied to the cluster with the kubectl API. These files are (mostly) named by their Kubernetes API kinds. It must be stated, that the "deployments.yaml" file also contains the "namespace" kind. Thus the directory contains:
