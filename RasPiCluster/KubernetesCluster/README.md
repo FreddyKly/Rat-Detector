@@ -11,7 +11,7 @@ The following hardware is required during this manual:
 
 ## Preparations
 
-At first install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) on your PC. Other applications do also work to flash the OS image on the micro-SD memory cards, but this particular has two advantages. The imager has the Raspberry Pi operating systems already available. It also has an "advanced settings" menu, which can be used to assign a hostname, enable SSH, assign a username and a password, and set up the Wi-Fi connection to your network. This means that you only have to plug the micro SD card into the Raspberry after flashing.
+At first install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) on your PC. Other applications do also work to flash the OS image on the micro-SD memory cards, but this particular application has two advantages. The imager has the Raspberry Pi operating systems already available. It also has an "advanced settings" menu, which can be used to assign a hostname, enable SSH, assign a username and a password, and set up the Wi-Fi connection to your network. This means that you only have to plug the micro-SD card into the Raspberry after flashing.
 The operating system we are using is **Raspberry PI OS Lite (32-
 IT)**. The main reason for using a 32-Bit architecture is to reduce the overhead. Raspberry Pis have low computing power compared servers to used in a datacenter.
 It seems reasonable to give the devices a hostname equivalent to their purpose, for example, "masternodeX" or "workernodeX". This setup was built with one masternode and three workernodes. Therefore, we named the devices: 
@@ -31,7 +31,7 @@ Execute the following command on each of the raspberries to update and upgrade t
     sudo apt update && sudo apt upgrade -y
 
 This can be done simultaneously to reduce the waiting period.\
- After that execute the following command on the masternode:
+After that execute the following command on the masternode:
 
     curl -sfL https://get.k3s.io | sh -
 
@@ -74,7 +74,7 @@ At the start we will explain our decision which lead to the final cluster archit
 
 ### Theoretical Decisions and Application
 By default, each node only accesses its own filesystem. There are several possibilities to create persistent storage for the Kubernetes cluster. The first possibility is to label the cluster nodes and specifically define the node on which each application must run. This procedure seems to be technical possible, but from our point of view it represents the exact opposite of the intended use of a Kubernetes cluster. The second option we considered was the object storage application [MinIO](https://min.io/). The last possibility we took into account was a NFS-Server hosted on the cluster.
-To determine which of the two options works best, we split up the hardware. After a period of testing, we came to the conclusion that MinIO created too much overhead and therefore the application kept crashing the cluster nodes.  Also during the MINIO Setup we ran into a lot of issues concerning the pod in which it was supposed to run while the NFS-Server worked without a problem. Thus, our decision was mostly guided by pragmatism and led us to the use of the NFS-Server opposed to the implementation of the theoretically well suited MinIO. To enhance the available storage, we made use of an external SSD hard drive. The goal of this enhancement was to reduce the number of read/writes on the micro-SD card. We plugged the SSD into the masternode and bound the pod of the NFS-Server to the node with a label.
+To determine which of the two options works best, we split up the hardware. After a period of testing, we came to the conclusion that MinIO created too much overhead and therefore the application kept crashing the cluster nodes. Also during the MINIO setup we ran into a lot of issues concerning the pod in which it was supposed to run while the NFS-Server worked without a problem. Thus, our decision was mostly guided by pragmatism and led us to the use of the NFS-Server opposed to the implementation of the theoretically well suited MinIO. To enhance the available storage, we made use of an external SSD hard drive. The goal of this enhancement was to reduce the number of read/writes on the micro-SD card. We plugged the SSD into the masternode and bound the pod of the NFS-Server to the node with a label.
 
 At first glance, this method seems to contradict our previous statement about the intended use of a Kubernetes cluster. But here we argue with the hardware limitations, a productive cluster could use a Network Attached Storage or one could configure predefined solutions for persistent storage. To the best of our judgment the Raspberries used here seemed to lack the capabilities to run MinIO and our applications in a manner suited for this project. An NFS-Server is like a NAS and since we only have one masternode we are not creating more single-points of failure.  
 
@@ -119,7 +119,7 @@ It is saved in the "secret.yaml" file and is base64 encoded. Do not use this pas
 ### Kubernetes Manifest
 The "manifest" directory has several files that are applied to the cluster with the kubectl API. These files are (mostly) named by their Kubernetes API kinds. It must be stated, that the "deployments.yaml" file also contains the "namespace" kind. Thus, the directory contains:
 * deployments.yaml
-* persistent_colum_claims.yaml
+* persistent_volume_claims.yaml
 * persistent_volumes.yaml
 * secrets.yaml 
 * services.yaml 
