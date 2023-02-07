@@ -9,7 +9,7 @@ import torch
 import urllib.request
 
 OFFSET = 0
-botToken = "5913924422:AAGT4Y0i6mqRadPFDyfmMDE3d4Q7OpMDorY"
+botToken = "6040873921:AAGQagXlzAY6kBTXuDyQWzySLl_Cq8d9xo4"
 
 requestURL = "https://api.telegram.org/bot" + botToken + "/getUpdates"
 sendURL = "https://api.telegram.org/bot" + botToken + "/sendMessage"
@@ -18,7 +18,6 @@ picpath = r"/usr/src/app/sensor-node/picture.jpg"
 
 # check for Telegram update
 def update (url):
-
     global OFFSET
     try:
         update_raw = requests.get(url + "?offset=" + str(OFFSET))
@@ -80,7 +79,6 @@ def check_user(userchatid):
 
 # turn on/off alert
 def toggle_alert(command, userchatid):
-    
     with open("config.json", "r+") as jsonFile:
         config_data = json.load(jsonFile)      
     user_nr = check_user(userchatid)
@@ -91,7 +89,6 @@ def toggle_alert(command, userchatid):
 
 # return status of alert 
 def status_alert(userchatid):
-
     user_nr = check_user(userchatid)
     with open("config.json", "r") as jsonFile:
         config_data = json.load(jsonFile)
@@ -99,9 +96,9 @@ def status_alert(userchatid):
     return alert_on
 
 
+
 # sends text message
 def send_message (chatId, message, print_response = True):
-
     data = {
         'chat_id': chatId,
         'text': message
@@ -219,12 +216,15 @@ def sendImageMetaData(encodedImageData, confidence, numberOfRats):
 
     headers = {'Content-type': 'application/json'}
     print("Trying to send...")
-    response = requests.post("http://iser-net.selfhost.co:30500/api/detections", headers=headers, data=imageMetaDataJSON)
-
-    if(response.status_code == 201):
-        print('Success')
-    else:
-        print(response)
+    try:
+        response = requests.post("http://192.168.188.26:30500/api/detections", headers=headers, data=imageMetaDataJSON)
+    
+        if(response.status_code == 201):
+            print('Success')
+        else:
+            print(response)
+    except ConnectionError as e:    
+        print(e)
 
 
 def main():  
@@ -267,7 +267,7 @@ def main():
                     im_base64 = Image.fromarray(im)
                     im_base64.save(buffered, format="JPEG")
                     encodedImg = base64.b64encode(buffered.getvalue()).decode('utf-8')
-                    #sendImageMetaData(encodedImageData=encodedImg, confidence=confidence, numberOfRats=numberOfRats)
+                    sendImageMetaData(encodedImageData=encodedImg, confidence=confidence, numberOfRats=numberOfRats)
 
                     # sends to Telegram bot
                     '''  
