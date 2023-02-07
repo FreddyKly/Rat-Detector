@@ -1,5 +1,5 @@
 # Cluster Setup and Installation 
-This manual explains how to install the Kubernetes distribution k3s on a set of Raspberry Pi 3B.  
+This manual explains how to install the Kubernetes distribution k3s on a set of Raspberry Pi 3B and how to configure it for this project.  
 The k3s distribution can be found on https://k3s.io/. 
 
 ## Hardware Requirements 
