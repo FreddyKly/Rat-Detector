@@ -7,7 +7,7 @@ const router = express.Router();
 // Returns the rows of the "detection" table
 async function loadDetections() {
     try{
-        const selectAllQuery = 'SELECT * FROM detections';
+        const selectAllQuery = 'SELECT * FROM detections ORDER BY id_pic DESC LIMIT 30';
 
         con = await pool.getConnection();
 
