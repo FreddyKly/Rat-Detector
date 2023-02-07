@@ -37,7 +37,7 @@
                       detection.createdAt.getHours() + ":" +
                         detection.createdAt.getMinutes() + " " +
                         detection.createdAt.getDate() + "." +
-                        detection.createdAt.getMonth() + "." +
+                        (detection.createdAt.getMonth() + 1) + "." +
                         detection.createdAt.getFullYear()
                     }} </v-card-title>
                   </v-img>
