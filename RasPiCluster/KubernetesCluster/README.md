@@ -1,10 +1,10 @@
 # Cluster Setup and Installation 
-This manual explains how to install the Kubernetes distribution k3s on a set of Raspberry Pi 3B+.  
+This manual explains how to install the Kubernetes distribution k3s on a set of Raspberry Pi 3B.  
 The k3s distribution can be found on https://k3s.io/. 
 
 ## Hardware Requirements 
 The following hardware is required during this manual:
-* At least 2 Raspberry Pi 3B+
+* At least 2 Raspberry Pi 3B
 * An external SSD hard drive
 * Administrator access to the router of your network
 * LAN- and power cables for the Raspberries
@@ -12,7 +12,8 @@ The following hardware is required during this manual:
 ## Preparations
 
 At first install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) on your PC. Other applications do also work to flash the OS image on the micro-SD memory cards, but this particular has two advantages. The imager has the Raspberry Pi operating systems already available. It also has an "advanced settings" menu, which can be used to assign a hostname, enable SSH, assign a username and a password, and set up the Wi-Fi connection to your network. This means that you only have to plug the micro SD card into the Raspberry after flashing.
-The operating system we are using is **Raspberry PI OS Lite (32-BIT)**. The main reason for using a 32-Bit architecture is to reduce the overhead. Raspberry Pis have low computing power compared servers to used in a datacenter.
+The operating system we are using is **Raspberry PI OS Lite (32-
+IT)**. The main reason for using a 32-Bit architecture is to reduce the overhead. Raspberry Pis have low computing power compared servers to used in a datacenter.
 It seems reasonable to give the devices a hostname equivalent to their purpose, for example, "masternodeX" or "workernodeX". This setup was built with one masternode and three workernodes. Therefore, we named the devices: 
 * masternode1
 * workernode1
