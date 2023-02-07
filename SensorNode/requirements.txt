@@ -1,5 +1,1 @@
-# delete hashtag before "torch" and "pillow" when dependencies are being installed on a native machine instead of a docker container
-#torch>=1.7.0 
-opencv-python
-requests
-#pillow
+requests==2.25.1

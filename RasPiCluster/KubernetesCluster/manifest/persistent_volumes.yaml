@@ -16,7 +16,7 @@ spec:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: hdd
+        - key: SSD
           operator: In
           values:
           - enabled
