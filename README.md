@@ -28,6 +28,9 @@ The goal of the project was to develop an edge computing solution for the automa
   * Vue
   * [ReadMe](./RasPiCluster/WebApp/README.md)
 
+## Projectplan
+
+[Projectplan](https://docs.google.com/spreadsheets/d/1blkumipM_04yoFpU5t7ghFyGxC0EWA-yb7izUSy3DnM/edit#gid=1224810397)
 
 
 
