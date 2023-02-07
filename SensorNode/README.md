@@ -1,3 +1,12 @@
+# Main Script with docker
+
+To run the main script do:
+
+```
+cd /path/to/SensorNode
+docker compose up
+```
+
 # Install dependencies (on local native machine)
 Go to the requirements.txt and delete the hashtag before "torch" when dependecies are not being installed in a docker container
 
@@ -19,4 +28,22 @@ Execute the following command from the root of this project:
 
 ```
 docker run --network="host" sensor-node:0.0.1
+```
+
+# Camera Script
+
+The camera script is running on the Python ditribution(Version 3.9) of the Raspberry 4 to satisfy the requirements of the picamera2 library.
+
+Set up:
+
+```
+pip install libcamera?
+pip install picamera2
+pip install time?
+```
+
+To run the camera script:
+
+```
+python /path/to/run_camera.py
 ```
