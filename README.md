@@ -23,10 +23,10 @@ The goal of the project was to develop an edge computing solution for the automa
   * The ReadMe contains a detailed description of purpose and function of the images below
   * MariaDB 
   * NFS-Server 
-* NodeJS 
+* Webapp
+  * NodeJS 
+  * Vue
   * [ReadMe](./RasPiCluster/WebApp/README.md)
-* Vue
-
 
 
 
