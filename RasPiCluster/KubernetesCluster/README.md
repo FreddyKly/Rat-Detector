@@ -73,7 +73,7 @@ At the start we will explain our decision which lead to the final cluster archit
 
 ### Theoretical Decisions and Application
 By default, each node only accesses its own filesystem. There are several possibilities to create persistent storage for the Kubernetes cluster. The first possibility is to label the cluster nodes and specifically define the node on which each application has to run. This procedure seems to be technical possible, but from our point of view it represents the exact opposite of the intended use of a Kubernetes cluster. The second option we considered was the object storage application [MinIO](https://min.io/). The last possibility we took into account was a NFS-Server hosted on the cluster.
-To determine which of the two options works best, we split up the hardware. After a period of testing, we came to the conclusion that MinIO created too much overhead and therefore the application kept crashing the cluster nodes. The NFS-Server worked without a problem. To enhance the available storage we made use of an external SSD hard drive. The goal of this enhancement was to reduce the number of read/writes on the micro SD card. We plugged the SSD into the masternode and bound the pod of the NFS-Server to the node with a label.
+To determine which of the two options works best, we split up the hardware. After a period of testing, we came to the conclusion that MinIO created too much overhead and therefore the application kept crashing the cluster nodes.  Also during the MINIO Setup we ran into a lot of issues concerning the pod in which it was supposed to run while the NFS-Server worked without a problem. Thus, our decision was mostly guided by pragmatism and led us to the use of the NFS-Server opposed to the implmenetation of the theoretically well suited MinIO. To enhance the available storage we made use of an external SSD hard drive. The goal of this enhancement was to reduce the number of read/writes on the micro SD card. We plugged the SSD into the masternode and bound the pod of the NFS-Server to the node with a label.
 
 At first glance, this method seems to contradict our previous statement about the intended use of a Kubernetes cluster. But here we argue with the hardware limitations, a productive cluster could use a Network Attached Storage or one could configure predefined solutions for persistent storage. From our experience the Raspberries did not have the capacity to run MinIO and our applications. An NFS-Server is similar to a NAS and since we only have one masternode we are not creating more single-points of failure. Hence we decided us for the last option. 
 
@@ -143,13 +143,3 @@ For MariaDB also exists an deployment. Similar to the NFS server we defined a "v
 
 The remaining two deployments and services are used for the WebApp. The images of the WebApp are stored in the DockerHub. There were mainly two reasons to store the images there and these were the ease of use and the wide range of people using it. The deployments ensure, that one pod of the server- and client-part is always up and running. 
 The remaining services are from the type "LoadBalancer". This service provides an IP address for the pods that can be accessed from outside of the cluster. We forward the ports of the pods to two distinct "nodeports". The "nodeports" have by default a range of 30000-32767, hence the high "nodeports". The IP address of the MariaDB is statically defined before the WebAPP Image is compiled and pushed to DockerHub. Therefore the images of the WebApp have to be recompiled with changed IP addresses in a new setup. 
-
-
-
-
-
-
-
-
-
-
