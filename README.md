@@ -24,6 +24,7 @@ The goal of the project was to develop an edge computing solution for the automa
   * MariaDB 
   * NFS-Server 
 * NodeJS 
+  * [ReadMe](./RasPiCluster/WebApp/README.md)
 * Vue
 
 
