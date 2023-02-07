@@ -1,30 +1,30 @@
 # Cluster Setup and Installation 
-This manual explains how to install the kubernetes distribution k3s on a set of RaspberryPi 3B+.  
+This manual explains how to install the Kubernetes distribution k3s on a set of Raspberry Pi 3B+.  
 The k3s distribution can be found on https://k3s.io/. 
 
 ## Hardware Requirements 
-The follwing hardware is required during this manual:
-* At least 2 RaspberryPi 3B+
+The following hardware is required during this manual:
+* At least 2 Raspberry Pi 3B+
 * An external SSD hard drive
 * Administrator access to the router of your network
-* LAN- and powercables for the Raspberries
+* LAN- and power cables for the Raspberries
 
 ## Preparations
 
-At first install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) on your PC. Other applications do also work to flash the OS image on the micro SD memory cards, but this particular has two advantages. The imager has the Raspberry Pi operatingsystems already preselected. It also has an "advanced settings" menu, which can be used to assign a hostname, enable SSH, assign a username and a password, and set up the Wifi connection to your network. This means that you only have to plug the micro SD card into the Raspberry after flashing.
-The operating system we are using is **Raspberry PI OS Lite (32-BIT)**. The main reason for using a 32-Bit architecture is to reduce the overhead. Raspberry Pis have low computing power compared servers used in a datacenter.
-It seems reasonable to give the devices a hostname equivalent to their purpose. For example "masternodeX" or "workernodeX". This setup was build with one masternode and three workernodes. Therefore we named the devices: 
+At first install the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) on your PC. Other applications do also work to flash the OS image on the micro-SD memory cards, but this particular has two advantages. The imager has the Raspberry Pi operating systems already available. It also has an "advanced settings" menu, which can be used to assign a hostname, enable SSH, assign a username and a password, and set up the Wi-Fi connection to your network. This means that you only have to plug the micro SD card into the Raspberry after flashing.
+The operating system we are using is **Raspberry PI OS Lite (32-BIT)**. The main reason for using a 32-Bit architecture is to reduce the overhead. Raspberry Pis have low computing power compared servers to used in a datacenter.
+It seems reasonable to give the devices a hostname equivalent to their purpose, for example, "masternodeX" or "workernodeX". This setup was built with one masternode and three workernodes. Therefore, we named the devices: 
 * masternode1
 * workernode1
 * workernode2
 * workernode3
 
-In the following the "masternode1" is just referenced by "masternode". Plug in the flashed micro SD cards, connect the Raspberrys via LAN to your network and turn them on. Now check if the devices are in your network. If the devices are in the network continue with the installation.
+In the following the "masternode1" is just referenced by "masternode". Plug in the flashed micro-SD cards, connect the Raspberries via LAN to your network and turn them on. Now check if the devices are in your network. If the devices are in the network continue with the installation.
 
 ## Installation of a k3s-Cluster
 
 A large part of this installation manual originates from this [tutorial](https://medium.com/thinkport/how-to-build-a-raspberry-pi-kubernetes-cluster-with-k3s-76224788576c). 
-The next steps desrcribe the installation of the cluster.\
+The next steps describe the installation of the cluster.\
 Execute the following command on each of the raspberries to update and upgrade the software:
 
     sudo apt update && sudo apt upgrade -y
@@ -34,20 +34,20 @@ This can be done simultaneously to reduce the waiting period.\
 
     curl -sfL https://get.k3s.io | sh -
 
-During the installation an error will occur, but the installation itself wont be interrupted. Thus execute:
+During the installation an error will occur, but the installation itself won’t be interrupted. Thus execute:
 
     sudo nano /boot/cmdline.txt
 
-This opens the "cmdline.txt" document in a texteditor. The document has only one line and must be extended by the following line:
+This opens the "cmdline.txt" document in a text editor. The document has only one line and must be extended by the following line:
 
     cgroup_memory=1 cgroup_enable=memory
 
-It is important not to leave the first line and accidentaly insert a line break. Before the masternode is rebooted we have to get the node-token. Hence execute:
+It is important not to leave the first line and accidentally insert a line break. Before the masternode is rebooted we must get the node-token. Hence execute:
 
     sudo cat /var/lib/rancher/k3s/server/node-token
 
 This string is important for the installation of the worker nodes.\
-It has to be temporarily safed somewhere. After that reboot the masternode and continue with the installation of the workernodes.
+It must be temporarily saved somewhere. After that reboot the masternode and continue with the installation of the workernodes.
 
     sudo reboot
 
@@ -55,11 +55,11 @@ The installation of the workernodes is almost identical to the installation of t
 
     curl -sfL https://get.k3s.io | K3S_URL=https://<masternode_IP_Address>:6443 K3S_TOKEN=<masternode_token> sh -
 
-Again the installation will yield an error, but the procedure wont be interrupted. Execute the same commands that were used at the masternode to correct the error. Reboot the workernode after that:
+Again, the installation will yield an error, but the procedure won´t be interrupted. Execute the same commands that were used at the masternode to correct the error. Reboot the workernode after that:
 
     sudo reboot
 
-Repeat this installation process for every workernode. Whether the installation was successfull can be checked by executing: 
+Repeat this installation process for every workernode. Whether the installation was successful can be checked by executing: 
 
     sudo k3s kubectl get nodes
 
@@ -72,7 +72,7 @@ The cluster has to maintain persistent storage and display the results of the cl
 At the start we will explain our decision which lead to the final cluster architecture and hereafter the YAML manifest itself. 
 
 ### Theoretical Decisions and Application
-By default each node only accesses its own filesystem. There are several possibilities to create persistent storage for the Kubernetes cluster. The first possibility is to label the cluster nodes and specifically define the node on which each application has to run. This procedure seems to be technical possible, but from our point of view it represents the exact opposite of the intended use of a Kubernetes cluster. The second option we considered was the object storage application [MinIO](https://min.io/). The last possibility we took into account was a NFS-Server hosted on the cluster.
+By default, each node only accesses its own filesystem. There are several possibilities to create persistent storage for the Kubernetes cluster. The first possibility is to label the cluster nodes and specifically define the node on which each application has to run. This procedure seems to be technical possible, but from our point of view it represents the exact opposite of the intended use of a Kubernetes cluster. The second option we considered was the object storage application [MinIO](https://min.io/). The last possibility we took into account was a NFS-Server hosted on the cluster.
 To determine which of the two options works best, we split up the hardware. After a period of testing, we came to the conclusion that MinIO created too much overhead and therefore the application kept crashing the cluster nodes. The NFS-Server worked without a problem. To enhance the available storage we made use of an external SSD hard drive. The goal of this enhancement was to reduce the number of read/writes on the micro SD card. We plugged the SSD into the masternode and bound the pod of the NFS-Server to the node with a label.
 
 At first glance, this method seems to contradict our previous statement about the intended use of a Kubernetes cluster. But here we argue with the hardware limitations, a productive cluster could use a Network Attached Storage or one could configure predefined solutions for persistent storage. From our experience the Raspberries did not have the capacity to run MinIO and our applications. An NFS-Server is similar to a NAS and since we only have one masternode we are not creating more single-points of failure. Hence we decided us for the last option. 
