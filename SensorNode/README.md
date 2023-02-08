@@ -1,6 +1,7 @@
 # Main Script with docker
 
-The sensor node runs on Raspberry Pi OS Bullseye (64-bit).
+The sensor node runs on Raspberry Pi OS Bullseye (64-bit), installed by inserting the SD-card into a computer and installing the OS by using Raspberry Pi Imager application.
+
 To run the main script, execute in Rat-Detector/SensorNode:
 
 ```
