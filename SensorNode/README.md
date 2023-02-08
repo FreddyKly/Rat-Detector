@@ -13,9 +13,8 @@ The camera script is running on the Python ditribution(Version 3.9) of the Raspb
 Set up:
 
 ```
-pip install libcamera?
 pip install picamera2
-pip install time?
+pip install time
 ```
 
 To run the camera script:
