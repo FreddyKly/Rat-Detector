@@ -14,7 +14,7 @@ botToken = "6040873921:AAGQagXlzAY6kBTXuDyQWzySLl_Cq8d9xo4"
 requestURL = "https://api.telegram.org/bot" + botToken + "/getUpdates"
 sendURL = "https://api.telegram.org/bot" + botToken + "/sendMessage"
 sendPhotoURL = "https://api.telegram.org/bot" + botToken + "/sendPhoto"
-picpath = r"/usr/src/app/sensor-node/picture.jpg"
+picpath = r"/usr/src/app/sensor-node/detect.jpg"
 
 # check for Telegram update
 def update (url):
@@ -113,8 +113,9 @@ def send_message_button (chatId, message, buttonJSON):
 
 # send photo
 def send_photo (chatId, numberOfRats, confidence):
-    
+    print("Trying to send photo to Telegram server...")
     img = {'photo': open(picpath,'rb')}
+
     
     if (numberOfRats == 1):
         caption_msg = str(numberOfRats) + " rat has been detected with a confidence of " + "{:.0%}".format(confidence[0])
@@ -198,7 +199,7 @@ def handler_user_input():
         print ("Error:", e)
 
 ####################
-# END TELEGRAM PART#
+# END TELEGRAM PART#file
 ####################
 
 """
@@ -230,12 +231,15 @@ def sendImageMetaData(encodedImageData, confidence, numberOfRats):
 def main():  
 
     model = torch.hub.load('ultralytics/yolov5', 'custom', 'weights/best.pt', force_reload=True)
-    model.conf = 0.5
-    
+    model.conf = 0.7
+
+    sendIntervallCluster = 30
+    lastPicSend = time.time() - sendIntervallCluster
+
     while True:
         try:
             time.sleep(2)
-            
+            print('-----------------------------------------------------')
             img = "picture.jpg"
             results = model(img)
 
@@ -247,19 +251,23 @@ def main():
             pred = results.pandas().xyxy[0]
 
             for index, row in pred.iterrows():
-                if row['confidence'] > 0.5:
+                if row['confidence'] > model.conf:
                     numberOfRats += 1
                     confidence.append(row['confidence'])
+
+            confidence_str = ''
+            for el in confidence:
+                el = el * 100
+                confidence_str += '{:.2f}'.format(round(el, 2)) + ','
+
 
             print("Number of rats detected: " + str(numberOfRats))
             print("Confidence: " + str(confidence))
 
-            #confidence = 0.9
-
             results.ims  # array of original images (as np array) passed to model for inference
-            results.render()  # updates results.ims with boxes and labels            
+            results.render()  # updates results.ims with boxes and labels         
 
-            #handler_user_input() #checks for Telegram input
+            handler_user_input() #checks for Telegram input
                                 
             if numberOfRats > 0:           
                 for im in results.ims:
@@ -267,10 +275,18 @@ def main():
                     im_base64 = Image.fromarray(im)
                     im_base64.save(buffered, format="JPEG")
                     encodedImg = base64.b64encode(buffered.getvalue()).decode('utf-8')
-                    sendImageMetaData(encodedImageData=encodedImg, confidence=confidence, numberOfRats=numberOfRats)
+                    img_to_save = Image.open(BytesIO(base64.decodebytes(bytes(encodedImg, 'utf-8'))))
+                    img_to_save.save('detect.jpg')
+
+                    # send to cluster
+
+                    if ( lastPicSend + sendIntervallCluster < time.time()):
+                        print(confidence_str[:-1])
+                        sendImageMetaData(encodedImageData=encodedImg, confidence=confidence_str[:-1], numberOfRats=numberOfRats)
+                        lastPicSend = time.time()
 
                     # sends to Telegram bot
-                    '''  
+                    
                     with open("config.json", "r") as jsonFile:
                         config_data = json.load(jsonFile)                    
                     for i in (config_data['Subscriber']):
@@ -280,7 +296,7 @@ def main():
                             user_nr = check_user(userchatid)
                             config_data['Subscriber'][user_nr]['last_photo'] = time.time()
                             with open("config.json", "w") as jsonFile:
-                                json.dump(config_data, jsonFile, indent=2)'''
+                                json.dump(config_data, jsonFile, indent=2)
 
             # timeStamp = 
         except IOError as e:    
