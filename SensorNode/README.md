@@ -1,6 +1,8 @@
 # Main Script with docker
 
-To run the main script do in Rat-Detector/SensorNode:
+The sensor node runs on Raspberry Pi OS Bullseye (64-bit), installed by inserting the SD-card into a computer and installing the OS by using Raspberry Pi Imager application.
+
+To run the main script, execute in Rat-Detector/SensorNode:
 
 ```
 docker compose up
@@ -8,14 +10,13 @@ docker compose up
 
 # Camera Script
 
-The camera script is running on the Python ditribution(Version 3.9) of the Raspberry 4 to satisfy the requirements of the picamera2 library.
+The camera script is running on the Python distribution(Version 3.9) of the Raspberry 4 to satisfy the requirements of the picamera2 library.
 
 Set up:
 
 ```
-pip install libcamera?
 pip install picamera2
-pip install time?
+pip install time
 ```
 
 To run the camera script:
