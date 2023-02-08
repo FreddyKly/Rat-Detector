@@ -55,7 +55,7 @@ router.post('/', async (req, res) =>{
 
         const insertQuery = 'INSERT INTO detections VALUES (?, ?, ?, ?, ?)';
 
-        const result = await con.query(insertQuery, [null, req.body.image, new Date(), 2, 95]);
+        const result = await con.query(insertQuery, [null, req.body.image, new Date(), req.body.numberOfRats , req.body.confidence]);
 
         res.status(201).send('Entry was successfully inserted!');
 
