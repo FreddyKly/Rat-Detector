@@ -85,7 +85,7 @@ npm install
 # Start the server:
 1. Change Directory
 ```
-cd RasPiCluster
+cd RasPiCluster/WebApp/server
 ```
 
 2. Start the Server on localhost:5000
@@ -98,7 +98,7 @@ npm run dev
 # Start the Front-end
 1. Change directory into client
 ```
-cd RasPiCluster/client
+cd RasPiCluster/WebApp/client
 ```
 
 2. Start the Front-end on localhost:8080
