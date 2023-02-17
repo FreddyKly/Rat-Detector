@@ -31,13 +31,13 @@ Execute the following command from the root of this project:
 #### Client
 
 ```
-docker image build --platform linux/arm64 -t web-app-client:0.0.1 ./RasPiCluster/WebApp/client
+docker image build --platform linux/arm/v7 -t web-app-client:0.0.1 ./RasPiCluster/WebApp/client
 ```
 
 #### Server
 
 ```
-docker image build --platform linux/arm64 -t web-app-server:0.0.1 ./RasPiCluster/WebApp/server
+docker image build --platform linux/arm/7 -t web-app-server:0.0.1 ./RasPiCluster/WebApp/server
 ```
 
 ### <a name="run-docker"></a>Run Docker Image
@@ -58,14 +58,6 @@ Execute the following command from the root of this project:
 docker run -p 5000:5000 web-app-server:0.0.1
 ```
 
-# Setup for development
-## Installations
-### MongoDB Database
-Follow Tutorial under: https://www.mongodb.com/basics/mongodb-atlas-tutorial
-The Names of the databases and users are hardcoded right now. To use your own database name/username/password you would need to make adjustments in the code base under: Rat-Detector/RasPiCLuster/server/routes/api/detections.js. If you just want to run the code, here is what I used:
-- Database name: cluster0
-- username: freddykly
-- password: RatDetector
 
 ### Npm installations 
 1. Change directory
@@ -93,7 +85,7 @@ npm install
 # Start the server:
 1. Change Directory
 ```
-cd RasPiCluster
+cd RasPiCluster/WebApp/server
 ```
 
 2. Start the Server on localhost:5000
@@ -106,7 +98,7 @@ npm run dev
 # Start the Front-end
 1. Change directory into client
 ```
-cd RasPiCluster/client
+cd RasPiCluster/WebApp/client
 ```
 
 2. Start the Front-end on localhost:8080

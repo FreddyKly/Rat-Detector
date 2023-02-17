@@ -111,7 +111,7 @@ spec:
     spec:
       containers:
         - name: webapp-server
-          image: kaiser0815/webapp-server:v4
+          image: kaiser0815/webapp-server:v5
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -137,7 +137,7 @@ spec:
     spec:
       containers:
         - name: webapp-client
-          image: kaiser0815/webapp-client:v4
+          image: kaiser0815/webapp-client:v5
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
